@@ -20,6 +20,7 @@
 
         * {
             font-family: 'Balsamiq Sans', cursive;
+            box-sizing: border-box;
         }
 
         body {
@@ -28,11 +29,11 @@
             background-attachment: fixed;
             background-position: center;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            padding: 20px;
             margin: 0;
             min-height: 100vh;
+            padding: 20px;
         }
 
         .game-wrapper {
@@ -40,136 +41,162 @@
             justify-content: center;
             align-items: center;
             width: 100%;
+            height: 100%;
         }
 
         .game-container {
             background-color: rgba(255, 255, 255, 0.95);
-            padding: 30px;
-            border-radius: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            padding: 40px; /* Increased padding for better spacing */
+            border-radius: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             text-align: center;
             width: 100%;
-            max-width: 950px;
-            border: 5px solid var(--primary);
+            max-width: 1100px; /* Increased width to fit larger text */
+            border: 6px solid var(--primary); /* Slightly thicker border */
             position: relative;
+            transition: all 0.3s ease;
         }
 
-        /* Fullscreen styles */
-        .game-container:fullscreen {
-            width: 100vw;
-            height: 100vh;
-            max-width: none;
-            border: none;
-            border-radius: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+        /* Fullscreen containment logic */
+        .game-wrapper:fullscreen {
             background-image: url('gamepage.jpg');
             background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        h1 { color: var(--dark); margin: 0 0 10px 0; font-size: 2.8rem; }
-        p { color: #444; margin-bottom: 25px; font-size: 1.3rem; }
+        /* Safari prefix */
+        .game-wrapper:-webkit-full-screen {
+            background-image: url('gamepage.jpg');
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 { color: var(--dark); margin: 0 0 10px 0; font-size: 3.5rem; display: flex; align-items: center; justify-content: center; gap: 15px; }
+        p { color: #444; margin-bottom: 30px; font-size: 1.6rem; font-weight: 700; }
 
         .vocab-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 12px;
-            margin-bottom: 30px;
+            gap: 20px; /* Increased gap for larger boxes */
+            margin-bottom: 40px;
         }
 
         .word-box {
             background: white;
-            border: 3px solid var(--primary);
-            border-radius: 15px;
-            padding: 10px;
-            box-shadow: 0 4px 0px var(--primary);
+            border: 4px solid var(--primary);
+            border-radius: 20px;
+            padding: 20px 10px;
+            box-shadow: 0 6px 0px var(--primary);
         }
 
         .word-number {
             display: block;
-            font-size: 1rem;
+            font-size: 1.2rem;
             color: var(--secondary);
             font-weight: 700;
+            margin-bottom: 5px;
         }
 
         .word-text {
             display: block;
-            font-size: 1.3rem;
+            font-size: 2.0rem; /* Increased by an additional 30% */
             color: var(--dark);
             font-weight: 700;
         }
 
         .controls {
             display: flex;
-            gap: 12px;
+            gap: 20px;
             justify-content: center;
             flex-wrap: wrap;
         }
 
-        /* Top Bar for Toggle Button */
         .window-header {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 15px;
+            position: absolute;
+            top: 25px;
+            right: 25px;
         }
 
         button {
-            padding: 12px 20px;
-            font-size: 1.1rem;
+            padding: 15px 30px;
+            font-size: 1.4rem;
             font-weight: 700;
             border: none;
-            border-radius: 15px;
+            border-radius: 20px;
             cursor: pointer;
             transition: all 0.1s;
             color: white;
-            box-shadow: 0 5px 0 rgba(0,0,0,0.2);
+            box-shadow: 0 6px 0 rgba(0,0,0,0.2);
         }
 
-        button:active { transform: translateY(4px); box-shadow: 0 1px 0 rgba(0,0,0,0.2); }
-        button:disabled { background-color: #bdc3c7; cursor: not-allowed; box-shadow: none; }
+        button:active { transform: translateY(4px); box-shadow: 0 2px 0 rgba(0,0,0,0.2); }
 
         .btn-play { background-color: var(--primary); }
         .btn-reveal { background-color: var(--secondary); }
         .btn-next { background-color: var(--success); }
         .btn-quit { background-color: var(--danger); }
-        .btn-toggle { background-color: var(--info); padding: 8px 15px; font-size: 0.9rem; }
+        
+        .btn-toggle { 
+            background-color: white; 
+            border: 3px solid var(--primary);
+            box-shadow: none;
+            padding: 8px;
+            border-radius: 12px;
+        }
+        
+        .btn-toggle:active { transform: scale(0.9); }
+
+        .fullscreen-icon {
+            width: 40px;
+            height: 40px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234a90e2'%3E%3Cpath d='M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .is-fullscreen .fullscreen-icon {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234a90e2'%3E%3Cpath d='M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z'/%3E%3C/svg%3E");
+        }
 
         #code-display {
-            margin-top: 25px;
-            font-size: 3rem;
+            margin-top: 30px;
+            font-size: 4rem;
             font-weight: 700;
             color: var(--dark);
             background: #fff;
-            border-radius: 20px;
-            border: 4px dashed var(--primary);
-            padding: 10px;
-            min-height: 80px;
+            border-radius: 25px;
+            border: 5px dashed var(--primary);
+            padding: 15px;
+            min-height: 100px;
             display: flex;
             align-items: center;
             justify-content: center;
-            letter-spacing: 10px;
+            letter-spacing: 20px;
         }
 
         .hidden { visibility: hidden; }
 
-        @media (max-width: 800px) {
+        @media (max-width: 900px) {
             .vocab-grid { grid-template-columns: repeat(3, 1fr); }
-        }
-        @media (max-width: 500px) {
-            .vocab-grid { grid-template-columns: repeat(2, 1fr); }
+            .word-text { font-size: 1.6rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="game-wrapper">
-        <div class="game-container" id="mainContainer">
+    <div class="game-wrapper" id="fullscreenWrapper">
+        <div class="game-container">
             <div class="window-header">
-                <button id="fullscreenBtn" class="btn-toggle" onclick="toggleFullscreen()">🔳 Maximize</button>
+                <button id="fullscreenBtn" class="btn-toggle" onclick="toggleFullscreen()">
+                    <div class="fullscreen-icon"></div>
+                </button>
             </div>
 
-            <h1>🔐 Code Breaker</h1>
+            <h1><span style="font-size: 1.2em;">🔐</span> Code Breaker</h1>
             <p>Listen carefully and find the secret number sequence!</p>
 
             <div class="vocab-grid" id="vocabGrid"></div>
@@ -186,15 +213,10 @@
     </div>
 
     <script>
-        const vocabulary = [
-            "white", "wheel", "whale", "what", "when",
-            "photo", "phone", "dolphin", "Phil", "elephant"
-        ];
-        
+        const vocabulary = ["white", "wheel", "whale", "what", "when", "photo", "phone", "dolphin", "Phil", "elephant"];
         let currentSequence = [];
         let isPlaying = false;
 
-        // Initialize Grid
         const vocabGrid = document.getElementById('vocabGrid');
         vocabulary.forEach((word, index) => {
             const div = document.createElement('div');
@@ -203,46 +225,32 @@
             vocabGrid.appendChild(div);
         });
 
-        // Combined Toggle Function
         function toggleFullscreen() {
-            const container = document.getElementById("mainContainer");
-            const btn = document.getElementById("fullscreenBtn");
-
+            const wrapper = document.getElementById("fullscreenWrapper");
             if (!document.fullscreenElement) {
-                if (container.requestFullscreen) {
-                    container.requestFullscreen();
-                } else if (container.webkitRequestFullscreen) {
-                    container.webkitRequestFullscreen();
-                }
-                btn.innerHTML = "🗗 Minimize";
+                if (wrapper.requestFullscreen) wrapper.requestFullscreen();
+                else if (wrapper.webkitRequestFullscreen) wrapper.webkitRequestFullscreen();
             } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                }
-                btn.innerHTML = "🔳 Maximize";
+                if (document.exitFullscreen) document.exitFullscreen();
             }
         }
 
-        // Update button text if user exits via ESC key
         document.addEventListener('fullscreenchange', () => {
             const btn = document.getElementById("fullscreenBtn");
-            if (!document.fullscreenElement) {
-                btn.innerHTML = "🔳 Maximize";
+            if (document.fullscreenElement) {
+                btn.classList.add('is-fullscreen');
             } else {
-                btn.innerHTML = "🗗 Minimize";
+                btn.classList.remove('is-fullscreen');
             }
         });
 
         function generateUniqueSequence() {
             currentSequence = [];
             let pool = [...Array(vocabulary.length).keys()];
-            const length = 3; 
-
-            for (let i = 0; i < length; i++) {
+            for (let i = 0; i < 3; i++) {
                 const randomIdx = Math.floor(Math.random() * pool.length);
                 const vocabIdx = pool.splice(randomIdx, 1)[0];
                 currentSequence.push({ 
-                    name: vocabulary[vocabIdx], 
                     code: vocabIdx + 1,
                     audio: new Audio(`${vocabulary[vocabIdx]}.mp3`)
                 });
@@ -258,15 +266,11 @@
             for (let i = 0; i < currentSequence.length; i++) {
                 await new Promise(resolve => {
                     const audio = currentSequence[i].audio;
-                    audio.onended = () => setTimeout(resolve, 800); 
-                    audio.onerror = () => {
-                        console.error("Audio not found: " + audio.src);
-                        resolve();
-                    };
+                    audio.onended = () => setTimeout(resolve, 800);
+                    audio.onerror = () => resolve();
                     audio.play();
                 });
             }
-
             isPlaying = false;
             document.getElementById('btnPlay').disabled = false;
         }
@@ -284,14 +288,7 @@
         }
 
         function quitGame() {
-            if (confirm("Do you want to quit?")) {
-                document.body.innerHTML = `
-                    <div style="text-align:center; margin-top: 100px; background:white; padding: 50px; border-radius: 30px; border: 5px solid var(--primary); max-width: 500px; margin-left: auto; margin-right: auto;">
-                        <h1 style="font-size: 3rem;">Great Job!</h1>
-                        <p style="font-size: 1.5rem;">See you next time!</p>
-                        <button class="btn-play" style="padding: 20px 40px; font-size: 2rem;" onclick="location.reload()">Play Again</button>
-                    </div>`;
-            }
+            if (confirm("Do you want to quit?")) location.reload();
         }
 
         window.onload = generateUniqueSequence;
